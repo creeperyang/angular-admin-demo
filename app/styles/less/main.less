@@ -5,6 +5,7 @@
 @c-black: #23272b;
 @c-deep-gray: #34383d;
 @c-gray: #4f575c;
+@c-blue: #21a9e1;
 
 @c-light-font: #999da2;
 @c-normal-font: #404b50;
@@ -81,7 +82,13 @@ body {
     }
 
     .menu-zone {
-        // padding-left: 40px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 160px;
+        bottom: 0;
+
+        background-color: @c-deep-gray;
     }
 }
 
@@ -92,10 +99,24 @@ body {
     .item {
         display: block;
         width: 100%;
-        padding: 12px 0;
 
         color: @c-white;
 
         background-color: @c-deep-gray;
+        border-right: solid 4px transparent;
+        &.active {
+            border-right-color: @c-blue;
+        }
+        .item-content {
+            padding: 12px 0 12px 60px;
+        }
+    }
+    &.submenu {
+        .item {
+            background-color: @c-black;
+        }
+        .item-content {
+            padding-left: 84px;
+        }
     }
 }

@@ -52,6 +52,14 @@ body {
   text-align: center;
   background-color: #4f575c;
 }
+.cy-sidebar .menu-zone {
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 160px;
+  bottom: 0;
+  background-color: #34383d;
+}
 .cy-menu {
   display: block;
   width: 100%;
@@ -61,7 +69,19 @@ body {
 .cy-menu .item {
   display: block;
   width: 100%;
-  padding: 12px 0;
   color: #ffffff;
   background-color: #34383d;
+  border-right: solid 4px transparent;
+}
+.cy-menu .item.active {
+  border-right-color: #21a9e1;
+}
+.cy-menu .item .item-content {
+  padding: 12px 0 12px 60px;
+}
+.cy-menu.submenu .item {
+  background-color: #23272b;
+}
+.cy-menu.submenu .item-content {
+  padding-left: 84px;
 }
