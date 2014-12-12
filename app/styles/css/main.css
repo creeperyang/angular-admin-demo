@@ -1,0 +1,67 @@
+html {
+  font-size: 20px;
+}
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #f1f1f1;
+}
+.cy-topbar {
+  display: block;
+  width: 100%;
+  height: 48px;
+  padding: 4px 12px;
+  overflow: hidden;
+  background-color: #ffffff;
+}
+.cy-topbar .logo-zone {
+  float: left;
+  height: 100%;
+  color: #404b50;
+}
+.cy-topbar .logo-zone .logo {
+  display: inline-block;
+  height: 100%;
+}
+.cy-topbar .logo-zone .title {
+  display: inline-block;
+  height: 100%;
+  margin: 0;
+  line-height: 40px;
+  font-weight: normal;
+  font-size: 16px;
+}
+.cy-topbar .info-zone {
+  float: right;
+  color: #999da2;
+}
+.cy-sidebar {
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  height: 100%;
+  width: 240px;
+  background-color: #23272b;
+}
+.cy-sidebar .user-zone {
+  display: block;
+  width: 100%;
+  height: 160px;
+  padding: 20px;
+  text-align: center;
+  background-color: #4f575c;
+}
+.cy-menu {
+  display: block;
+  width: 100%;
+  list-style: none;
+  padding-left: 0;
+}
+.cy-menu .item {
+  display: block;
+  width: 100%;
+  padding: 12px 0;
+  color: #ffffff;
+  background-color: #34383d;
+}
