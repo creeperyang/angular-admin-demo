@@ -48,6 +48,9 @@ module.exports = function(grunt) {
                 files: ['<%= yeoman.app %>/styles/{,*/}*.css', '<%= yeoman.app %>/styles/{,*/}*.less'],
                 tasks: ['less:development', 'newer:copy:styles', 'autoprefixer']
             },
+            views: {
+                files: ['<%= yeoman.app %>/views/{,*/}*.html']
+            },
             gruntfile: {
                 files: ['Gruntfile.js']
             },
@@ -146,11 +149,35 @@ module.exports = function(grunt) {
         },
 
         // Add vendor prefixed styles
+        // autoprefixer: {
+        //     options: {
+        //         browsers: ['last 1 version']
+        //     },
+        //     dist: {
+        //         files: [{
+        //             expand: true,
+        //             cwd: '.tmp/styles/',
+        //             src: '{,*/}*.css',
+        //             dest: '.tmp/styles/'
+        //         }]
+        //     }
+        // },
         autoprefixer: {
             options: {
-                browsers: ['last 1 version']
+                browsers: ['last 2 versions']
             },
             dist: {
+                files: [{
+                    expand: true,
+                    cwd: '.tmp/styles/',
+                    src: '{,*/}*.css',
+                    dest: '.tmp/styles/'
+                }]
+            },
+            sourcemap: {
+                options: {
+                    map: true
+                },
                 files: [{
                     expand: true,
                     cwd: '.tmp/styles/',
@@ -317,7 +344,8 @@ module.exports = function(grunt) {
                     src: ['generated/*']
                 }, {
                     expand: true,
-                    cwd: 'bower_components/bootstrap/dist',
+                    //cwd: 'bower_components/bootstrap/dist',
+                    cwd: '<%= yeoman.app %>/styles/less/fa',
                     src: 'fonts/*',
                     dest: '<%= yeoman.dist %>'
                 }]
@@ -327,13 +355,20 @@ module.exports = function(grunt) {
                 cwd: '<%= yeoman.app %>/styles',
                 dest: '.tmp/styles/',
                 src: '{,*/}*.css'
+            },
+            fonts: {
+                expand: true,
+                cwd: '<%= yeoman.app %>/styles/less/fa/fonts/',
+                dest: '.tmp/fonts/',
+                src: '*'
             }
         },
 
         // Run some tasks in parallel to speed up the build process
         concurrent: {
             server: [
-                'copy:styles'
+                'copy:styles',
+                'copy:fonts'
             ],
             test: [
                 'copy:styles'
@@ -356,7 +391,9 @@ module.exports = function(grunt) {
                     paths: ['<%= yeoman.dist %>/styles/css']
                 },
                 files: {
-                    '<%= yeoman.app %>/styles/css/main.css': '<%= yeoman.app %>/styles/less/main.less'
+                    '<%= yeoman.app %>/styles/css/main.css': '<%= yeoman.app %>/styles/less/main.less',
+                    '<%= yeoman.app %>/styles/css/bs-base.css': '<%= yeoman.app %>/styles/less/bs-base.less',
+                    '<%= yeoman.app %>/styles/css/font-awesome.css': '<%= yeoman.app %>/styles/less/font-awesome.less'
                 }
             }
         },

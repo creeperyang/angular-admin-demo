@@ -7,7 +7,7 @@
  * # MainCtrl
  * Controller of the yoApp
  */
-angular.module('adminApp')
+angular.module('adminApp.controllers')
     .controller('IndexCtrl', function($scope) {
         
     });

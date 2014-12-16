@@ -9,10 +9,11 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
+    <link rel="stylesheet" href="styles/css/bs-base.css">
+    <link rel="stylesheet" href="styles/css/font-awesome.css">
     <link rel="stylesheet" href="styles/css/main.css">
     <!-- endbuild -->
 </head>
@@ -25,97 +26,72 @@
     <!-- Add your site or application content here -->
     <header class="cy-topbar fixed-to-top">
         <div class="logo-zone">
-            <img class="logo" src="./images/yeoman.png">
+            <img class="logo" src="./images/logo.png">
             <h1 class="title">店铺管理系统</h1>
         </div>
         <div class="info-zone">
-            <span>技术支持：021-64458607</span>
-            <span>龙默升科技</span>
+            <span class='info'>技术支持：021-64458607</span>
+            <span class='info'>龙默升科技</span>
         </div>
     </header>
-    <aside class="cy-sidebar">
+
+    <aside class="cy-sidebar" ng-controller="SidebarCtrl">
         <div class="user-zone">
-            <img class="avatar" src="./images/yeoman.png">
-            <p class="name">很久以前</p>
-            <p>Admin</p>
+            <img class="avatar" src="./images/photo.png">
+            <p class="merchant-name">很久以前</p>
+            <div>
+                <span class='employee-name'>Admin</span>
+                <span class='action' ng-click="open()">修改密码</span>/
+                <span class='action'>注销</span>
+            </div>
         </div>
         <nav class="menu-zone">
-            <ul class="cy-menu">
-                <li class="item">
-                    <div class="item-content">
-                        <i class='glyphicon glyphicon-heart'></i>
-                        <span>首页</span>
-                    </div>
-                </li>
-                <li class="item">
-                    <div class="item-content">
-                        <i class='glyphicon glyphicon-heart'></i>
-                        <span>功能设置</span>
-                    </div>
-                </li>
-                <li class="item">
-                    <div class="item-content">
-                        <i class='glyphicon glyphicon-heart'></i>
-                        <span>店铺数据</span>
-                    </div>
-                    <ul class="cy-menu submenu">
-                        <li class="item subitem">
-                            <div class="item-content">
-                                <span>客流报表</span>
-                            </div>
-                        </li>
-                        <li class="item subitem">
-                            <div class="item-content">
-                                <span>广告报表</span>
-                            </div>
-                        </li>
-                        <li class="item subitem active">
-                            <div class="item-content">
-                                <span>下载报表</span>
-                            </div>
-                        </li>
-                    </ul>
-                </li>
-            </ul>
+            <cy-menu list="menuData"></cy-menu>
         </nav>
     </aside>
-    <div class="container">
-        <!-- <div class="header">
-            <ul class="nav nav-pills pull-right">
-                <li class="active"><a ng-href="#">Home</a>
-                </li>
-                <li><a ng-href="#/about">About</a>
-                </li>
-                <li><a ng-href="#">Contact</a>
+    <div id="main-content">
+
+        <div class="page-wrap">
+            <div ng-view class="page"></div>
+        </div>
+
+    </div>
+
+    <script type="text/ng-template" id="myModalContent.html">
+        <div class="modal-header">
+            <h3 class="modal-title">Im a modal!</h3>
+        </div>
+        <div class="modal-body">
+            <ul>
+                <li ng-repeat="item in items">
+                    <a ng-click="selected.item = item">{{ item }}</a>
                 </li>
             </ul>
-            <h3 class="text-muted">yo</h3>
-        </div> -->
-
-        <div ng-view=""></div>
-
-        <div class="footer">
-            <p><span class="glyphicon glyphicon-heart"></span> from the Yeoman team</p>
+            Selected: <b>{{ selected.item }}</b>
         </div>
-    </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
 
 
     <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
     <script>
-    (function(i, s, o, g, r, a, m) {
-        i['GoogleAnalyticsObject'] = r;
-        i[r] = i[r] || function() {
-            (i[r].q = i[r].q || []).push(arguments)
-        }, i[r].l = 1 * new Date();
-        a = s.createElement(o),
-            m = s.getElementsByTagName(o)[0];
-        a.async = 1;
-        a.src = g;
-        m.parentNode.insertBefore(a, m)
-    })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+    // (function(i, s, o, g, r, a, m) {
+    //     i['GoogleAnalyticsObject'] = r;
+    //     i[r] = i[r] || function() {
+    //         (i[r].q = i[r].q || []).push(arguments)
+    //     }, i[r].l = 1 * new Date();
+    //     a = s.createElement(o),
+    //         m = s.getElementsByTagName(o)[0];
+    //     a.async = 1;
+    //     a.src = g;
+    //     m.parentNode.insertBefore(a, m)
+    // })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
 
-    ga('create', 'UA-XXXXX-X');
-    ga('send', 'pageview');
+    // ga('create', 'UA-XXXXX-X');
+    // ga('send', 'pageview');
     </script>
 
     <!-- build:js(.) scripts/oldieshim.js -->
@@ -127,9 +103,7 @@
 
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
     <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-resource/angular-resource.js"></script>
@@ -142,8 +116,11 @@
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/page.js"></script>
     <script src="scripts/controllers/main.js"></script>
-    <script src="scripts/controllers/about.js"></script>
+    <script src="scripts/controllers/sidebar.js"></script>
+    <script src="scripts/services/recursionHelper.js"></script>
+    <script src="scripts/directives/cy-menu.js"></script>
     <!-- endbuild -->
 </body>
 
