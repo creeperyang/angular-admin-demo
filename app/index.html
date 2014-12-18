@@ -1,5 +1,5 @@
 <!doctype html>
-<html class="no-js">
+<html class="no-js" ng-app="adminApp">
 
 <head>
     <meta charset="utf-8">
@@ -9,6 +9,7 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/ng-table/ng-table.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
@@ -18,43 +19,52 @@
     <!-- endbuild -->
 </head>
 
-<body ng-app="adminApp">
+<body class="ng-cloak" ng-cloak ng-controller='PageCtrl'>
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <header class="cy-topbar fixed-to-top">
-        <div class="logo-zone">
-            <img class="logo" src="./images/logo.png">
-            <h1 class="title">店铺管理系统</h1>
-        </div>
-        <div class="info-zone">
-            <span class='info'>技术支持：021-64458607</span>
-            <span class='info'>龙默升科技</span>
-        </div>
-    </header>
-
-    <aside class="cy-sidebar" ng-controller="SidebarCtrl">
-        <div class="user-zone">
-            <img class="avatar" src="./images/photo.png">
-            <p class="merchant-name">很久以前</p>
-            <div>
-                <span class='employee-name'>Admin</span>
-                <span class='action' ng-click="open()">修改密码</span>/
-                <span class='action'>注销</span>
+    <div id="main-wrap">
+        <header class="cy-topbar fixed-to-top">
+            <div class="logo-zone">
+                <img class="logo" src="./images/logo.png">
+                <h1 class="title">{{'shopSystem' | translate}}</h1>
             </div>
-        </div>
-        <nav class="menu-zone">
-            <cy-menu list="menuData"></cy-menu>
-        </nav>
-    </aside>
-    <div id="main-content">
+            <div class="info-zone">
+                <span class='info'>技术支持：021-64458607</span>
+                <span class='info'>龙默升科技</span>
+            </div>
+        </header>
 
-        <div class="page-wrap">
-            <div ng-view class="page"></div>
-        </div>
+        <aside class="cy-sidebar" ng-controller="SidebarCtrl">
+            <div class="user-zone">
+                <img class="avatar" src="./images/photo.png">
+                <p class="merchant-name">很久以前</p>
+                <div>
+                    <span class='employee-name'>Admin</span>
+                    <span class='action' ng-click="open()">修改密码</span>/
+                    <span class='action' ng-click="go('/login')">注销</span>
+                </div>
+            </div>
+            <nav class="menu-zone">
+                <cy-menu list="menuData" track-url='{{true}}'></cy-menu>
+            </nav>
+        </aside>
 
+        <div id="main-content">
+
+            <div class="page-wrap">
+                <div class="page">
+                    <div ng-view class="page-viewer" ng-class="slide"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div id="login-page">
+        
     </div>
 
     <script type="text/ng-template" id="myModalContent.html">
@@ -111,6 +121,9 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-bootstrap/ui-bootstrap-tpls.js"></script>
+    <script src="bower_components/angular-translate/angular-translate.js"></script>
+    <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
+    <script src="bower_components/ng-table/ng-table.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -119,8 +132,10 @@
     <script src="scripts/controllers/page.js"></script>
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/sidebar.js"></script>
+    <script src="scripts/controllers/adPage.js"></script>
     <script src="scripts/services/recursionHelper.js"></script>
     <script src="scripts/directives/cy-menu.js"></script>
+    <script src="scripts/directives/cy-container.js"></script>
     <!-- endbuild -->
 </body>
 

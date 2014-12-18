@@ -9,5 +9,5 @@
  */
 angular.module('adminApp.controllers')
     .controller('IndexCtrl', function($scope) {
-        
+        $scope.test = true;
     });

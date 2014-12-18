@@ -9,10 +9,15 @@
 @c-deep-gray: #34383d;
 @c-gray: #4f575c;
 @c-blue: #21a9e1;
+@c-container-border: #e7e7e7;
+@c-container-header-border: #e1e2e5;
 
 @s-font-size-normal: 14px;
 @s-font-size-large: 16px;
 
+@z-index-fixed: 10;
+@z-index-page: 8;
+@z-index-page-enter: 9;
 
 .unstyled-list() {
     list-style: none;
@@ -22,6 +27,21 @@
 .remove-inline-block-space() {
     font-size: 0; // 非常神奇，1-11px会强制12px，但0px可以起作用
     -webkit-text-size-adjust: none; // chrome新版已删除该属性
+}
+// style text------------------------------------
+.style-text(@margin-top: 0; @margin-bottom: 0; @color: @text-color; 
+    @font-size: @font-size-base; @font-weight: normal) { // always h1-h6
+    margin-top: @margin-top;
+    margin-bottom: @margin-bottom;
+
+    font-weight: @font-weight;
+    font-size: @font-size;
+    color: @color;
+}
+.ellipsis() { // text ellipsis
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
 }
 
 // animations
@@ -67,32 +87,19 @@
         transform: scaleY(0);
     }
 }
+@keyframes slide { 
+    0% { transform: translate3d(-360px,0,0); opacity:0.3; }
+    96% { transform: translate3d(10px,0,0);  }
+    100% { transform: translate3d(0,0,0); opacity: 1; }
+}
 
 
-
-// .item.active-add, .item.active-remove {
-//     .submenu {
-//         animation: 'height-grow' 1.5s linear;
-//         -webkit-animation: 'height-grow' 1.5s linear;
-//     }
-// }
-//.item.active,
-// .item.active-add, .item.active-add-active {
-//     .submenu {
-//         animation: 'height-scale' 0.3s linear;
-//     }
-// }
-
-// .item.active-remove, .item.active-remove-active {
-//     .submenu {
-//         animation: 'height-scale-reverse' 0.3s linear;
-//     }
-// }
 
 .fixed-to-top {
     position: fixed;
     left: 0;
     top: 0;
+    z-index: @z-index-fixed;
 }
 
 .cy-topbar {
@@ -183,6 +190,7 @@
         color: @c-white;
 
         background-color: @c-deep-gray;
+        transition: all 0.1s linear;
         .item-content {
             position: relative;
             padding: 12px 0 12px 60px;
@@ -203,8 +211,8 @@
         &.active:not(.has-child) {
             border-right: solid 4px @c-blue;
         }
-        &.active.has-child {
-            
+        &.is-expanded {
+            background-color: @c-black;
         }
     }
     .submenu {
@@ -229,11 +237,117 @@
     }
 }
 
+.cy-container {
+    display: block;
+    background-color: @c-white;
+    border-bottom: 1px solid @c-container-border;
+    .header {
+        position: relative;
+        padding: 24px 30px 0;
+        border-bottom: 1px solid @c-container-header-border;
+        &>a {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+        .title {
+            .style-text(0, 10px, @brand-info, 20px, normal);
+        }
+        .subtitle {
+            .style-text(0, 12px, @text-color, 14px, normal);
+        }
+        .action {
+            position: absolute;
+            right: 12px;
+            top: 12px;
 
+            &>a, &>span {
+                font-size: 12px;
+                color: @brand-warning;
+            }
+        }
+    }
+    .content {
+        padding: 22px 24px;
+        &.no-top-padding {
+            padding-top: 0;
+        }
+    }
+}
+
+// ng animation
+.slide-top.ng-enter,
+.slide-top.ng-leave,
+.slide-bottom.ng-enter,
+.slide-bottom.ng-leave {
+    position: absolute;
+    left: 0;
+    top: 0; 
+    right: 0;
+    bottom: 0;
+    transition: 2.4s ease-in-out;
+}
+.slide-top.ng-enter {
+    z-index: @z-index-page-enter;
+    transform: translateY(110%);
+}
+.slide-top.ng-enter.ng-enter-active {
+    transform: translateY(0);
+}
+.slide-top.ng-leave {
+    z-index: @z-index-page;
+    transform: translateY(0);
+}
+.slide-top.ng-leave.ng-leave-active {
+    transform: translateY(-100%);
+}
+.slide-bottom.ng-enter {
+    z-index: @z-index-page;
+    transform: translateY(-110%);
+}
+.slide-bottom.ng-enter.ng-enter-active {
+    transform: translateY(0);
+}
+.slide-bottom.ng-leave {
+    z-index: @z-index-page-enter;
+    transform: translateY(0);
+}
+.slide-bottom.ng-leave.ng-leave-active {
+    transform: translateY(100%);
+}
+
+
+#main-wrap {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
 #main-content {
     display: block;
     width: 100%;
-    min-height: 100%;
+    // min-height: 100%;
+    height: 100%;
     padding-top: 48px;
     padding-left: 240px;
+
+    .page-wrap {
+        width: 100%;
+        height: 100%;
+        padding: 40px;
+    }
+    .page {
+        position: relative;
+        width: 100%;
+        min-height: 100%;
+    }
+    .page-viewer {
+        display: block;
+        width: 100%;
+        min-height: 100%;
+    }
+}
+
+// handle angular fouc
+[ng\:cloak], [ng-cloak], [data-ng-cloak], [x-ng-cloak], .ng-cloak, .x-ng-cloak {
+    display: none !important;
 }

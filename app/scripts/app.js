@@ -25,21 +25,40 @@ angular
         'ngResource',
         'ngRoute',
         'ngSanitize',
+        'ngTable',
         'ui.bootstrap',
+        'pascalprecht.translate', // i18n dependency
         'adminApp.services',
         'adminApp.directives',
         'adminApp.controllers'
     ])
-    .config(function($routeProvider) {
+    .config(['$routeProvider', '$translateProvider', function($routeProvider, $translateProvider) {
+        // route
         $routeProvider
             .when('/', {
                 templateUrl: 'views/index.html',
                 controller: 'IndexCtrl'
             })
-            .when('/Data/passenger', {
+            // .when('/login', {
+            //     templateUrl: 'views/login.html',
+            //     controller: 'LoginCtrl'
+            // })
+            .when('/data/passenger', {
                 templateUrl: 'views/data/passenger.html'
+            })
+            .when('/data/ad', {
+                templateUrl: 'views/data/ad.html',
+                controller: 'AdPageCtrl'
             })
             .otherwise({
                 redirectTo: '/'
             });
-    });
+
+        // i18n
+        $translateProvider
+            .useStaticFilesLoader({
+                prefix: '/languages/',
+                suffix: '.json'
+            })
+            .preferredLanguage('zhCN');
+    }]);

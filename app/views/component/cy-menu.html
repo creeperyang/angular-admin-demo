@@ -1,10 +1,10 @@
 <ul class="cy-menu" ng-class="{'submenu': isSubmenu}">
-    <li class="item" ng-class="{'active': item.active, 'has-child': !!item.list}" ng-repeat="item in list">
-        <div class="item-content" ng-click="toggleMenu($index, item);">
+    <li class="item" ng-class="{'active': isActive($index, item, isSubmenu), 'has-child': !!item.list, 'is-expanded': item.isExpanded}" ng-repeat="item in list">
+        <div class="item-content" ng-click="handleMenuClick($index, item);">
             <i ng-show="item.icon" class='{{item.icon}}'></i>
-            <span>{{item.text}}</span>
-            <i ng-if="item.list" class='fa item-indicator' ng-class="{'fa-angle-right': !item.active, 'fa-angle-down': item.active}"></i>
+            <span>{{item.text | translate}}</span>
+            <i ng-if="item.list" class='fa item-indicator' ng-class="{'fa-angle-right': !item.isExpanded, 'fa-angle-down': item.isExpanded}"></i>
         </div>
-        <cy-menu list="item.list" is-submenu='{{true}}' ng-show="item.active"></cy-menu>
+        <cy-menu list="item.list" is-submenu='{{true}}' ng-show="item.isExpanded"></cy-menu>
     </li>
 </ul>

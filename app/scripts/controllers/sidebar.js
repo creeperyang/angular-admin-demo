@@ -5,27 +5,26 @@ angular.module('adminApp.controllers')
 
         $scope.menuData = [{
             icon: 'fa fa-heart',
-            text: '首页',
-            link: '/',
-            active: true
+            text: 'home',
+            path: '/'
         }, {
             icon: 'fa fa-heart',
-            text: '功能设置',
-            link: '/'
+            text: 'settings',
+            path: '/settings'
         }, {
             icon: 'fa fa-heart',
-            text: '店铺数据',
-            link: '/',
+            text: 'data',
+            path: '/data',
             active: false,
             list: [{
                 text: '客流报表',
-                link: '/'
+                path: '/data/passenger'
             }, {
                 text: '广告报表',
-                link: '/',
+                path: '/data/ad',
             }, {
                 text: '下载报表',
-                link: '/',
+                path: '/data/download'
             }]
         }];
         $scope.items = ['item1', 'item2', 'item3'];
