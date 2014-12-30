@@ -1,6 +1,7 @@
 // Generated on 2014-12-11 using generator-angular 0.10.0
 'use strict';
 
+var path = require('path');
 // # Globbing
 // for performance reasons we're only matching one level down:
 // 'test/spec/{,*/}*.js'
@@ -37,7 +38,7 @@ module.exports = function(grunt) {
                 files: ['<%= yeoman.app %>/scripts/{,*/}*.js'],
                 tasks: ['newer:jshint:all'],
                 options: {
-                    livereload: '<%= connect.options.livereload %>'
+                    livereload: '35729'
                 }
             },
             jsTest: {
@@ -56,60 +57,13 @@ module.exports = function(grunt) {
             },
             livereload: {
                 options: {
-                    livereload: '<%= connect.options.livereload %>'
+                    livereload: '35729'
                 },
                 files: [
                     '<%= yeoman.app %>/{,*/}*.html',
                     '.tmp/styles/{,*/}*.css',
                     '<%= yeoman.app %>/images/{,*/}*.{png,jpg,jpeg,gif,webp,svg}'
                 ]
-            }
-        },
-
-        // The actual grunt server settings
-        connect: {
-            options: {
-                port: 9000,
-                // Change this to '0.0.0.0' to access the server from outside.
-                hostname: '0.0.0.0',
-                livereload: 35729
-            },
-            livereload: {
-                options: {
-                    open: true,
-                    middleware: function(connect) {
-                        return [
-                            connect.static('.tmp'),
-                            connect().use(
-                                '/bower_components',
-                                connect.static('./bower_components')
-                            ),
-                            connect.static(appConfig.app)
-                        ];
-                    }
-                }
-            },
-            test: {
-                options: {
-                    port: 9001,
-                    middleware: function(connect) {
-                        return [
-                            connect.static('.tmp'),
-                            connect.static('test'),
-                            connect().use(
-                                '/bower_components',
-                                connect.static('./bower_components')
-                            ),
-                            connect.static(appConfig.app)
-                        ];
-                    }
-                }
-            },
-            dist: {
-                options: {
-                    open: true,
-                    base: '<%= yeoman.dist %>'
-                }
             }
         },
 
@@ -149,19 +103,6 @@ module.exports = function(grunt) {
         },
 
         // Add vendor prefixed styles
-        // autoprefixer: {
-        //     options: {
-        //         browsers: ['last 1 version']
-        //     },
-        //     dist: {
-        //         files: [{
-        //             expand: true,
-        //             cwd: '.tmp/styles/',
-        //             src: '{,*/}*.css',
-        //             dest: '.tmp/styles/'
-        //         }]
-        //     }
-        // },
         autoprefixer: {
             options: {
                 browsers: ['last 2 versions']
@@ -404,9 +345,23 @@ module.exports = function(grunt) {
                 configFile: 'test/karma.conf.js',
                 singleRun: true
             }
+        },
+
+        express: {
+            options: {
+                // Override defaults here
+                port: 9000
+            },
+            dev: {
+                options: {
+                    script: 'server/index.js'
+                }
+            }
         }
+
     });
 
+    grunt.loadNpmTasks('grunt-express-server');
 
     grunt.registerTask('serve', 'Compile then start a connect web server', function(target) {
         if (target === 'dist') {
@@ -419,7 +374,7 @@ module.exports = function(grunt) {
             'less:development',
             'concurrent:server',
             'autoprefixer',
-            'connect:livereload',
+            'express:dev',
             'watch'
         ]);
     });

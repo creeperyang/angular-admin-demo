@@ -12,9 +12,6 @@ angular.module('adminApp.directives')
             scope: {
                 title: '@',
                 subtitle: '@'
-            },
-            link: function() {
-
             }
         }
         

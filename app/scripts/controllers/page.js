@@ -1,19 +1,17 @@
 'use strict';
 
 angular.module('adminApp.controllers') // created in app.js
-    .controller('PageCtrl', ['$scope', '$rootScope', '$window', '$location',// page change
-        function($scope, $rootScope, $window, $location) {
+    .controller('PageCtrl', ['$routeParams', '$scope', '$rootScope', '$window', '$location',// page change
+        function($routeParams, $scope, $rootScope, $window, $location) {
             $scope.slide = '';
+
             $rootScope.back = function() {
-                console.log("back")
-                $scope.slide = 'slide-bottom';
+                $scope.slide = 'slide-out';
                 $window.history.back();
-            }
+            };
             $rootScope.go = function(path) {
-                console.log('go')
-                console.log(path)
-                $scope.slide = 'slide-top';
+                $scope.slide = 'slide-in';
                 $location.url(path);
-            }
+            };
         }
     ]);

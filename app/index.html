@@ -25,26 +25,30 @@
     <![endif]-->
 
     <!-- Add your site or application content here -->
-    <div id="main-wrap">
+    <div id="main-wrap" ng-hide="showLoginPage">
         <header class="cy-topbar fixed-to-top">
             <div class="logo-zone">
                 <img class="logo" src="./images/logo.png">
-                <h1 class="title">{{'shopSystem' | translate}}</h1>
+                <h1 class="title">{{'AgentSystemName' | translate}}</h1>
+            </div>
+            <div class="action-zone">
+                <span class='action' ng-click="">中文</span>
+                <span class="splitor">/</span>
+                <span class='action'>English</span>
             </div>
             <div class="info-zone">
-                <span class='info'>技术支持：021-64458607</span>
-                <span class='info'>龙默升科技</span>
+                <span class='info'>{{'CustomServiceNumber' | translate}}</span>
+                <span class='info'>{{'CorpName' | translate}}</span>
             </div>
         </header>
 
         <aside class="cy-sidebar" ng-controller="SidebarCtrl">
             <div class="user-zone">
                 <img class="avatar" src="./images/photo.png">
-                <p class="merchant-name">很久以前</p>
+                <p class="name">{{agent.agentName}}</p>
                 <div>
-                    <span class='employee-name'>Admin</span>
-                    <span class='action' ng-click="open()">修改密码</span>/
-                    <span class='action' ng-click="go('/login')">注销</span>
+                    <span class='employee-name'>{{authInfo.userName}}</span>
+                    <span class='action'>{{'ChangePwd' | translate}}</span>&nbsp;/&nbsp;<span class='action' ng-click="logout()">{{'Logout' | translate}}</span>
                 </div>
             </div>
             <nav class="menu-zone">
@@ -63,8 +67,36 @@
         </div>
     </div>
 
-    <div id="login-page">
-        
+    <div id="login-page" ng-if="showLoginPage" ng-controller="LoginCtrl">
+        <header class='header'>
+            <img src="images/logo_full.png">
+        </header>
+        <article class='content'>
+            <div class="row">
+                <div class="col-sm-6 left-part">
+                    <img src="images/wifi.png">
+                </div>
+                <div class="col-sm-6 right-part">
+                    <h3 class="subtitle">{{'ProductName' | translate}}</h3>
+                    <h1 class="title">{{'AgentSystemName' | translate}}</h1>
+                    <form novalidate name="loginForm" ng-submit="login()">
+                        <div ng-class="{ 'has-error' : loginForm.username.$dirty && loginForm.username.$invalid }">
+                            <input type="text" class="form-control" name="username" placeholder='{{"LoginName" | translate}}' ng-model="user.username" required>
+                            <div ng-show="loginForm.username.$dirty" ng-messages="loginForm.username.$error">
+                                <p ng-message="required" class="error-msg text-danger">{{'LoginNameErrMsg1' | translate}}</p>
+                            </div>
+                        </div>
+                        <div ng-class="{ 'has-error' : loginForm.password.$dirty && loginForm.password.$invalid }">
+                            <input type="password" class="form-control" name="password" placeholder='{{"LoginPwd" | translate}}' ng-model="user.password" required>
+                            <div ng-show="loginForm.password.$dirty" ng-messages="loginForm.password.$error">
+                                <p ng-message="required" class="error-msg text-danger">{{'LoginPwdErrMsg1' | translate}}</p>
+                            </div>
+                        </div>
+                        <input type="submit" class="btn btn-primary btn-lg btn-block" ng-disabled="loginForm.$invalid" value='{{"Login" | translate}}'>
+                    </form>
+                </div>
+            </div>
+        </article>
     </div>
 
     <script type="text/ng-template" id="myModalContent.html">
@@ -78,6 +110,19 @@
                 </li>
             </ul>
             Selected: <b>{{ selected.item }}</b>
+        </div>
+        <div class="modal-footer">
+            <button class="btn btn-primary" ng-click="ok()">OK</button>
+            <button class="btn btn-warning" ng-click="cancel()">Cancel</button>
+        </div>
+    </script>
+
+    <script type="text/ng-template" id="login.html">
+        <div class="modal-header">
+            <h3 class="modal-title">I am a modal!</h3>
+        </div>
+        <div class="modal-body">
+            Body!!!!!!
         </div>
         <div class="modal-footer">
             <button class="btn btn-primary" ng-click="ok()">OK</button>
@@ -124,18 +169,35 @@
     <script src="bower_components/angular-translate/angular-translate.js"></script>
     <script src="bower_components/angular-translate-loader-static-files/angular-translate-loader-static-files.js"></script>
     <script src="bower_components/ng-table/ng-table.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
     <!-- build:js({.tmp,app}) scripts/scripts.js -->
     <script src="scripts/app.js"></script>
+
+    <script src="scripts/filters/checkStatus.js"></script>
+
     <script src="scripts/controllers/page.js"></script>
     <script src="scripts/controllers/main.js"></script>
     <script src="scripts/controllers/sidebar.js"></script>
-    <script src="scripts/controllers/adPage.js"></script>
+    <script src="scripts/controllers/agent.js"></script>
+    <script src="scripts/controllers/shop.js"></script>
+    <script src="scripts/controllers/login.js"></script>
+
     <script src="scripts/services/recursionHelper.js"></script>
+    <script src="scripts/services/agentService.js"></script>
+    <script src="scripts/services/shopService.js"></script>
+    <script src="scripts/services/utilsService.js"></script>
+    <script src="scripts/services/loginService.js"></script>
+    <script src="scripts/services/localStorageService.js"></script>
+
     <script src="scripts/directives/cy-menu.js"></script>
     <script src="scripts/directives/cy-container.js"></script>
+    <script src="scripts/directives/cy-table.js"></script>
+    <script src="scripts/directives/cy-control-label.js"></script>
+    <script src="scripts/directives/cy-validators.js"></script>
+    <script src="scripts/directives/cy-tree.js"></script>
     <!-- endbuild -->
 </body>
 

@@ -1,9 +1,7 @@
 <div class="cy-container">
-    <div class="header">
+    <div ng-if='title || subtitle' class="header">
         <h3 class="title">{{title}}</h3>
         <p class="subtitle" ng-if='subtitle'>{{subtitle}}</p>
     </div>
-    <div class="content">
-        <div ng-transclude></div>
-    </div>
+    <div class="content" ng-transclude></div>
 </div>

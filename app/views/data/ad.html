@@ -4,12 +4,15 @@
 
 
     <table ng-table="tableParams" template-pagination="custom/pager" class="table">
-        <tr ng-repeat="user in $data">
+        <tr ng-repeat="agent in $data">
+            <td data-title="'AgentID'">
+                {{agent.displayId}}
+            </td>
             <td data-title="'Name of people'">
-                {{user.name}}
+                {{agent.Name}}
             </td>
             <td data-title="'Age'">
-                {{user.age}}
+                {{agent.Type}}
             </td>
         </tr>
     </table>

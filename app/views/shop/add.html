@@ -1,0 +1,126 @@
+<form novalidate name="forms">
+    <cy-container ng-if="showUserInfo" class='fixed-sm' title="{{'UserInfo' | translate}}">
+        <div ng-form name="userInfoForm" class="row">
+            <cy-control cy-control-label-text="{{'UserName' | translate}}" cy-control-required="{{true}}" ng-class="{ 'has-error' : userInfoForm.name.$dirty && userInfoForm.name.$invalid }" class="col-sm-12">
+                <input class="form-control" type="text" ng-model="userInfo.name" ng-model-options="{ debounce: {'default': 300, 'blur': 0}, updateOn:'blur' }" placeholder="{{'UserNameHint' | translate}}" name="name" required ng-minlength='4' ng-maxlength='16' />
+                <div ng-show="userInfoForm.name.$dirty" ng-messages="userInfoForm.name.$error">
+                    <p ng-message="required" class="error-msg text-danger">{{'UserNameErrMsg1' | translate}}</p>
+                    <p ng-message="minlength" class="error-msg text-danger">{{'UserNameErrMsg2' | translate}}</p>
+                    <p ng-message="maxlength" class="error-msg text-danger">{{'UserNameErrMsg2' | translate}}</p>
+                    <p ng-message="duplicate" class="error-msg text-danger">{{'UserNameErrMsg3' | translate}}</p>
+                </div>
+            </cy-control>
+            <cy-control cy-control-label-text="{{'UserPwd' | translate}}" cy-control-required="{{true}}" ng-class="{ 'has-error' : userInfoForm.password.$dirty && userInfoForm.password.$invalid }" class="col-sm-12">
+                <input class="form-control" type="password" ng-model="userInfo.password" ng-model-options="{ updateOn: 'blur' }" placeholder="{{'UserNameHint' | translate}}" name="password" required ng-minlength='6' ng-maxlength='16' />
+                <div ng-show="userInfoForm.password.$dirty" ng-messages="userInfoForm.password.$error">
+                    <p ng-message="required" class="error-msg text-danger">{{'UserPwdErrMsg1' | translate}}</p>
+                    <p ng-message="minlength" class="error-msg text-danger">{{'UserPwdErrMsg2' | translate}}</p>
+                    <p ng-message="maxlength" class="error-msg text-danger">{{'UserPwdErrMsg2' | translate}}</p>
+                </div>
+            </cy-control>
+            <cy-control cy-control-label-text="{{'ReenterPwd' | translate}}" cy-control-required="{{true}}" ng-class="{ 'has-error' : userInfoForm.repeatPassword.$dirty && userInfoForm.repeatPassword.$invalid }" class="col-sm-12">
+                <input class="form-control" type="password" ng-model="userInfo.repeatPassword" ng-model-options="{ updateOn: 'blur' }" placeholder="{{'ReenterPwdHint' | translate}}" name="repeatPassword" required equals="{{userInfo.password}}" />
+                <div ng-show="userInfoForm.repeatPassword.$dirty" ng-messages="userInfoForm.repeatPassword.$error">
+                    <p ng-message="required" class="error-msg text-danger">{{'ReenterPwdErrMsg1' | translate}}</p>
+                    <p ng-message="equals" class="error-msg text-danger">{{'ReenterPwdErrMsg2' | translate}}</p>
+                </div>
+            </cy-control>
+        </div>
+    </cy-container>
+
+    <cy-container class='fixed-sm' title="{{'ShopInfo' | translate}}">
+        <div ng-form name="shopInfoForm" class="row">
+            <cy-control cy-control-label-text="{{'ShopName' | translate}}" cy-control-required="{{true}}" ng-class="{ 'has-error' : shopInfoForm.name.$dirty && shopInfoForm.name.$invalid }" class="col-sm-12">
+                <input class="form-control" type="text" ng-model-options="{ updateOn: 'blur' }" ng-model="shopInfo.name" placeholder="{{'ShopNameHint' | translate}}" name="name" required ng-maxlength="15" />
+                <div ng-show="shopInfoForm.name.$dirty" ng-messages="shopInfoForm.name.$error">
+                    <p ng-message="required" class="error-msg text-danger">{{'ShopNameErrMsg1' | translate}}</p>
+                    <p ng-message="maxlength" class="error-msg text-danger">{{'ShopNameErrMsg2' | translate}}</p>
+                </div>
+            </cy-control>
+
+            <cy-control cy-control-label-text="{{'Industry' | translate}}" cy-control-required="{{true}}" ng-class="{ 'has-error' : shopInfoForm.industry.$dirty && shopInfoForm.industry.$invalid }" class="col-sm-12">
+                <select class="form-control" name="industry" ng-model="shopInfo.industry" required ng-options="industry.id as industry.name for industry in industries">
+                    <option class="hint-option" value=""></option>
+                </select>
+                <div ng-show="shopInfoForm.industry.$dirty" ng-messages="shopInfoForm.industry.$error">
+                    <p ng-message="required" class="error-msg text-danger">{{'IndustryErrMsg1' | translate}}</p>
+                </div>
+            </cy-control>
+
+            <cy-control cy-control-label-text="{{'Country' | translate}}" cy-control-required="{{true}}" ng-class="{ 'has-error' : shopInfoForm.country.$dirty && shopInfoForm.country.$invalid }" class="col-sm-12">
+                <select class="form-control" name="country" ng-model="shopInfo.country" required ng-options="country.id as country.name for country in countries">
+                    <option class="hint-option" value=""></option>
+                </select>
+                <div ng-show="shopInfoForm.country.$dirty" ng-messages="shopInfoForm.country.$error">
+                    <p ng-message="required" class="error-msg text-danger">{{'CountryErrMsg1' | translate}}</p>
+                </div>
+            </cy-control>
+
+            <cy-control cy-control-label-text="{{'Province' | translate}}" cy-control-required="{{true}}" class="col-sm-6" ng-class="{ 'has-error' : shopInfoForm.province.$dirty && shopInfoForm.province.$invalid }">
+                <select class="form-control" name="province" ng-model="shopInfo.province" required ng-options="province.id as province.name for province in provinces">
+                    <option class="hint-option" value=""></option>
+                </select>
+                <div ng-show="shopInfoForm.province.$dirty" ng-messages="shopInfoForm.province.$error">
+                    <p ng-message="required" class="error-msg text-danger">{{'ProvinceErrMsg1' | translate}}</p>
+                </div>
+            </cy-control>
+
+            <cy-control cy-control-label-text="{{'City' | translate}}" cy-control-required="{{true}}" class="col-sm-6" ng-class="{ 'has-error' : shopInfoForm.city.$dirty && shopInfoForm.city.$invalid }">
+                <select class="form-control" name="city" ng-model="shopInfo.city" required ng-options="city.id as city.name for city in cities">
+                    <option class="hint-option" value=""></option>
+                </select>
+                <div ng-show="shopInfoForm.city.$dirty" ng-messages="shopInfoForm.city.$error">
+                    <p ng-message="required" class="error-msg text-danger">{{'CityErrMsg1' | translate}}</p>
+                </div>
+            </cy-control>
+
+            <cy-control cy-control-label-text="{{'District' | translate}}" cy-control-required="{{true}}" class="col-sm-12" ng-class="{ 'has-error' : shopInfoForm.district.$dirty && shopInfoForm.district.$invalid }">
+                <select class="form-control" name="district" ng-model="shopInfo.district" required ng-options="district.id as district.name for district in districts">
+                    <option class="hint-option" value=""></option>
+                </select>
+                <div ng-show="shopInfoForm.district.$dirty" ng-messages="shopInfoForm.district.$error">
+                    <p ng-message="required" class="error-msg text-danger">{{'DistrictErrMsg1' | translate}}</p>
+                </div>
+            </cy-control>
+
+            <cy-control cy-control-label-text="{{'Address' | translate}}" ng-class="{ 'has-error' : shopInfoForm.address.$dirty && shopInfoForm.address.$invalid }" class="col-sm-12">
+                <input class="form-control" type="text" ng-model-options="{ updateOn: 'blur' }" ng-model="shopInfo.address" placeholder="{{'AddressHint' | translate}}" name="address" ng-maxlength="50" />
+                <div ng-show="shopInfoForm.address.$dirty" ng-messages="shopInfoForm.address.$error">
+                    <p ng-message="maxlength" class="error-msg text-danger">{{'AddressErrMsg1' | translate}}</p>
+                </div>
+            </cy-control>
+
+            <cy-control cy-control-label-text="{{'Contacts' | translate}}" ng-class="{ 'has-error' : shopInfoForm.manager.$dirty && shopInfoForm.manager.$invalid }" class="col-sm-12">
+                <input class="form-control" type="text" ng-model-options="{ updateOn: 'blur' }" ng-model="shopInfo.manager" placeholder="{{'ContactsHint' | translate}}" name="manager" ng-maxlength="25" />
+                <div ng-show="shopInfoForm.manager.$dirty" ng-messages="shopInfoForm.manager.$error">
+                    <p ng-message="maxlength" class="error-msg text-danger">{{'ContactsErrMsg1' | translate}}</p>
+                </div>
+            </cy-control>
+
+            <cy-control cy-control-label-text="{{'ContactNumber' | translate}}" ng-class="{ 'has-error' : shopInfoForm.telphone.$dirty && shopInfoForm.telphone.$invalid }" class="col-sm-12">
+                <input class="form-control" type="text" ng-model-options="{ updateOn: 'blur' }" ng-model="shopInfo.telphone" placeholder="{{'ContactNumberHint' | translate}}" name="telphone" ng-pattern="/^\d{0,20}$/" />
+                <div ng-show="shopInfoForm.telphone.$dirty" ng-messages="shopInfoForm.telphone.$error">
+                    <p ng-message="pattern" class="error-msg text-danger">{{'ContactNumberErrMsg1' | translate}}</p>
+                </div>
+            </cy-control>
+        </div>
+    </cy-container>
+
+    <cy-container class='fixed-sm'>
+        <div class="row">
+            <div class="col-sm-6" ng-class="{'col-sm-offset-3': status === 'addShop'}">
+                <button ng-if="status === 'addShop'" type="button" class="btn btn-primary btn-block" ng-disabled="forms.$invalid" ng-click="save()">
+                    {{'Submit' | translate}}
+                </button>
+                <button ng-if="status === 'editShop'" type="submit" class="btn btn-primary btn-block" ng-disabled="!forms.$dirty" ng-click="save()">
+                    {{'Submit' | translate}}
+                </button>
+            </div>
+            <div class="col-sm-6">
+                <button type="button" ng-if="status === 'editShop'" class="btn btn-primary btn-block" ng-click="remove()">
+                    {{'DeleteAccount' | translate}}
+                </button>
+            </div>
+        </div>
+    </cy-container>
+</form>

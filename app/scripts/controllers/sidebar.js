@@ -1,33 +1,34 @@
 'use strict';
 
 angular.module('adminApp.controllers')
-    .controller('SidebarCtrl', function($scope, $modal, $log) {
+    .controller('SidebarCtrl', function($rootScope, $scope, $modal, LoginServ, AgentServ, LocalStorageServ) {
 
-        $scope.menuData = [{
-            icon: 'fa fa-heart',
-            text: 'home',
-            path: '/'
-        }, {
-            icon: 'fa fa-heart',
-            text: 'settings',
-            path: '/settings'
-        }, {
-            icon: 'fa fa-heart',
-            text: 'data',
-            path: '/data',
-            active: false,
-            list: [{
-                text: '客流报表',
-                path: '/data/passenger'
-            }, {
-                text: '广告报表',
-                path: '/data/ad',
-            }, {
-                text: '下载报表',
-                path: '/data/download'
-            }]
-        }];
-        $scope.items = ['item1', 'item2', 'item3'];
+        var Agent = AgentServ.Agent,
+            User = LoginServ.User;
+        var sessionApi = LocalStorageServ.sessionStorage;
+        $scope.$watch('aid', function(aid) {
+            if(!aid) return;
+            $scope.agent = AgentServ.Agent.get({
+                id: aid
+            });
+        });
+        $scope.$watch('authInfo.userName', function(name) {
+            if(!name) {
+                $scope.authInfo.userName = sessionApi.get('authInfo').userName;
+            }
+        });
+
+        $scope.logout = function() {
+            User.logout({
+                    csrfmiddlewaretoken: $scope.authInfo.csrf
+                }).$promise.then(function(res) {
+                    if(res.status === 1000) {
+                        sessionApi.clear();
+                        alert('Logut, ' + $scope.authInfo.userName);
+                        $scope.go('/login');
+                    }
+                });
+        };
 
         $scope.open = function(size) {
 

@@ -1,36 +1,32 @@
 'use strict';
 
 angular.module('adminApp.controllers')
-    .controller('LoginCtrl', ['$scope', '$modal', '$log',
-        function($scope, $modal, $log) {
-            $scope.open = function(size) {
-
-                var modalInstance = $modal.open({
-                    templateUrl: 'views/login.html',
-                    controller: 'ModalInstanceCtrl2',
-                    size: size,
-                    resolve: {
-                        items: function() {
-                            return $scope.items;
-                        }
-                    }
-                });
-
-                modalInstance.result.then(function(msg) {
-                    $log.info(msg);
-                }, function() {
-                    $log.info('Modal dismissed at: ' + new Date());
-                });
+    .controller('LoginCtrl', ['$scope', '$rootScope', 'LoginServ', 'LocalStorageServ',
+        function($scope, $rootScope, LoginServ, LocalStorageServ) {
+            
+            var sessionApi = LocalStorageServ.sessionStorage;
+            $scope.loginForm = {};
+            $scope.user = {
+                csrfmiddlewaretoken: $scope.authInfo.csrf
             };
+            $scope.login = function() {
+                LoginServ.User.login($scope.user)
+                    .$promise.then(function(res) {
+                        console.log(res);
+                        if(res.status === 1000) {
+                            $scope.authInfo.userName = $scope.user.username;
+                            $scope.authInfo.userType = res.data.type;
+                            alert('Welcome ' + $scope.authInfo.userName);
+                            if($scope.authInfo.userType === 'agent') {
+                                $scope.authInfo.agentId = res.data.id;
+                                sessionApi.set('authInfo', $scope.authInfo);
+                                $scope.go('/' +  res.data.id + '/agent/list');
+                            } else {
+                                alert('You are not agent manager!');
+                            }
+                        }
+                    });
+            };
+            
         }
-    ])
-    .controller('ModalInstanceCtrl2', function($scope, $modalInstance, items) {
-
-        $scope.ok = function() {
-            $modalInstance.close("I'm close");
-        };
-
-        $scope.cancel = function() {
-            $modalInstance.dismiss('cancel');
-        };
-    });
+    ]);

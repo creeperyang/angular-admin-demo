@@ -1,0 +1,86 @@
+<cy-container title="{{'SubAgentList' | translate}}">
+    <!-- <p><strong>Page:</strong> {{tableParams.page()}}
+    <p><strong>Count per page:</strong> {{tableParams.count()}} -->
+
+    <div cy-table table-params="tableParams" template-pagination="custom/pager" template-operation="custom/operation">
+        <div class="cy-table-operation row" search-key="{{'name'}}"></div>
+        <table class="table table-striped table-hover table-condensed">
+            <tr ng-repeat="agent in $data">
+                <td data-title="'AgentID' | translate">
+                    {{agent.displayId}}
+                </td>
+                <td data-title="'AgentName' | translate">
+                    {{agent.name}}
+                </td>
+                <td data-title="'Industry' | translate">
+                    {{agent.industry}}
+                </td>
+                <td data-title="'SubAgentCount' | translate">
+                    {{agent.subAgentCount}}
+                </td>
+                <td data-title="'ShopCount' | translate">
+                    {{agent.agentMerchantCount}}
+                </td>
+                <td data-title="'APCount' | translate">
+                    {{agent.agentApCount}}
+                </td>
+                <td data-title="'CreateTime' | translate">
+                    {{agent.createTime | date:'yyyy-MM-dd HH:mm:ss'}}
+                </td>
+                <td data-title="'Operation' | translate">
+                    <span class='btn btn-primary' ng-click="go('/' + aid + '/agent/edit/' + agent.id)">{{'Edit' | translate}}</span>
+                    <span class='btn btn-primary' ng-click="go('/' + agent.id + '/agent/list')">{{'LoginSubAgentSystem' | translate}}</span>
+                </td>
+            </tr>
+        </table>
+        <div class="cy-table-pagination" displayed-page-count="{{ '5'}}"></div>
+    </div>
+
+    <script type="text/ng-template" id="custom/pager">
+        <ul class="pager ng-cloak">
+            <li ng-repeat="page in pages" ng-class="{'disabled': !page.active, 'previous': page.type === 'prev', 'next': page.type==='next'}">
+                <a ng-if="page.type === 'prev'" ng-click="params.page(page.number)" href="">{{"PreviousPage" | translate}}</a>
+                <a ng-if="page.type === 'next'" ng-click="params.page(page.number)" href="">{{"NextPage" | translate}}</a>
+                <a ng-if="page.type === 'page' || page.type === 'first' || page.type === 'last'" ng-click="params.page(page.number)" href="">{{page.number}}</a>
+            </li>
+        </ul>
+    </script>
+    <script type="text/ng-template" id="custom/operation">
+        <div class="col-sm-12">
+            <p>{{'CountPerPage' | translate}}</p>
+        </div>
+        <div class="col-sm-6">
+            <div class="cy-dropdown" dropdown>
+                <div class='input-group'>
+                    <input type='text' class='left-input form-control' value='{{params.count()}}' />
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-success right-action" dropdown-toggle>
+                            <i class='fa fa-angle-down'></i>
+                        </button>
+                    </span>
+                </div>
+                <ul class="dropdown-menu" role="menu">
+                    <li><a ng-class="{'active':params.count() == 5}" ng-click="params.count(5)">5</a>
+                    </li>
+                    <li><a ng-class="{'active':params.count() == 10}" ng-click="params.count(10)">10</a>
+                    </li>
+                    <li><a ng-class="{'active':params.count() == 20}" ng-click="params.count(20)">20</a>
+                    </li>
+                    <li><a ng-class="{'active':params.count() == 50}" ng-click="params.count(50)">50</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div class="col-sm-6">
+            <div class='cy-table-search input-group pull-right'>
+                <input type='text' class='left-input form-control' placeholder='{{"Search" | translate}}' ng-model="searchValue" />
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-success right-action" ng-click="params.search(searchValue)">
+                        <i class='fa fa-search'></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </script>
+
+</cy-container>
